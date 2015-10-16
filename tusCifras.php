@@ -1,5 +1,7 @@
 <?php
-    include"variablesVistas.php";
+    include("resources/connection.php");
+    $conexion = my_connection();
+    include("variablesVistas.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,18 +21,13 @@
       <![endif]-->
     </head>
     <body>
-        <nav class="navbar navbar-default navbar-inverse" role="navigation">
-            <div class="navbar-header">
-               <a class="navbar-brand" href="index.php"><span class="glyphicon glyphicon-cutlery"></span>&nbsp; &nbsp;Tu rebanada del pastel</a>
-            </div>
-        </nav>
-    
+        <?php include("navbar.php");?>  
     
         <div class="container">
             <div class="col-md-6">
                 <form class="form-horizontal" action="#" method="post" style="text-align:center" >
                     <fieldset>
-                        <legend><span class="glyphicon glyphicon-home"></span>&nbsp; &nbsp;####</legend>
+                        <legend><br><span class="glyphicon glyphicon-home"></span>&nbsp; &nbsp;<?php echo $_GET['municipio']?></legend>
                         
                         mapa con municipio pintado!
                     </fieldset>
@@ -40,21 +37,57 @@
             <div class="col-md-6">
                 <form class="form-horizontal" action="#" method="post" style="text-align:center" >
                     <fieldset>
-                      <legend><span class="glyphicon glyphicon-usd"></span>&nbsp; &nbsp;Lo que invirtieron en tí en el año #####</legend>
+                      <legend>Lo que gastó el Gobierno en tí<br>en el año por su operación en el <?php echo $_GET['year']?></legend>
                       
                         <?php
-                            $value = array(0,20,30,12,23,44,56,19);
-                            $name = array("1","2","3","4","5","6","7","8");
-                            chart(500, $value, $name); ?>
-                      
-                        
-                      
+                            $query = "select concepto, monto_ejercido/habitantes as gp from presupuesto where municipio = '".$_GET['municipio']."' and ejercicio = '".$_GET['year']."';";
+                            $resultado = $conexion->query($query);
+                            $arrayValues = new ArrayObject();
+                            $arrayNames = new ArrayObject();
+                            while($registro = $resultado->fetch_assoc()){
+                                $arrayValues->append($registro['gp']);
+                                $arrayNames->append($registro['concepto']);
+                            }
+                            while(count($arrayValues) < 15){
+                                $arrayValues->append(0);
+                                $arrayNames->append(0);
+                            }
+                            
+                            //$resultado->free();
+                            chart(500, $arrayValues, $arrayNames);
+                        ?> 
                     </fieldset>
                 </form>
             </div>
         </div>
     
         <div class="container"><br><br><br>
+            <div class="col-md-6">
+            <?php
+                $query = "select * from rebanada where municipio = '".$_GET['municipio']."' and anio = '".$_GET['year']."';";
+                $resultado = $conexion->query($query);
+                $arrayValues = new ArrayObject();
+                $arrayNames = new ArrayObject();
+                while($registro = $resultado->fetch_assoc()){
+                    $arrayValues->append($registro['gasto_persona']);
+                    $arrayNames->append($registro['concepto']);
+                    $str.= '<tr>';
+                    $str.= '<td>'.$registro['concepto'].'</td>';
+                    $str.= '<td>'.$registro['gasto_persona'].'</td>';
+                    //echo del glyphicon: <span class="glyphicon glyphicon-home"></span>&nbsp; &nbsp;
+                    $str.= '<td>Lugar en el estado: ###</td>';
+                    $str.= '</tr>';
+                }
+                while(count($arrayValues) < 15){
+                    $arrayValues->append(0);
+                    $arrayNames->append(0);
+                }
+        
+                $resultado->free();
+                chart2(500, $arrayValues, $arrayNames);
+            ?>
+                
+            </div>
             <div class="col-md-6">
                 <form class="form-horizontal" action="#" method="post" >
                     <fieldset>
@@ -63,103 +96,15 @@
                         <table class="table table-striped table-hover ">
                             <thead>
                                 <tr>
-                                    <th>#</th>
                                     <th>Tipo de obra</th>
                                     <th>Aporte por persona</th>
-                                    <th>Lugar de #####</th>
+                                    <th>Lugar de <?php echo $_GET['municipio']?></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Material de construcción</td><!-- adquisiciones -->
-                                    <td><legend><span class="glyphicon glyphicon-home"></span>&nbsp; &nbsp;Colaboradores</legend></td>
-                                    <td>Column content</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Construcciones en aeropuertos</td><!-- aeropistas -->
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Caminos</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Electrificación y alumbrado</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Equipamiento urbano y rural</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                </tr>
-                                <tr>
-                                    <td>8</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                </tr>
-                                <tr>
-                                    <td>9</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                </tr>
-                                <tr>
-                                    <td>10</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                </tr>
-                                <tr>
-                                    <td>11</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                </tr>
-                                <tr>
-                                    <td>12</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                </tr>
-                                <tr>
-                                    <td>13</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                </tr>
-                                <tr>
-                                    <td>14</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                </tr>
-                                <tr>
-                                    <td>15</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                    <td>Column content</td>
-                                </tr>
+                                <?php
+                                    echo $str;
+                                ?>
                             </tbody>
                         </table>
                         
