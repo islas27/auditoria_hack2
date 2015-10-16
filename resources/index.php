@@ -1,1 +1,1 @@
-<?php header("Location: http://jovenesinvestigadores.uach.mx/registro/login.php");?>
+<?php header("Location: ../index.php");?>
