@@ -1,0 +1,25 @@
+#saca los años
+select DISTINCT ejercicio from presupuesto where ejercicio in (select DISTINCT ejercicio from obra_publica );
+
+#saca los municipios por ejercicio
+select distinct municipio from presupuesto where ejercicio = ?;
+
+#Saca el presupuesto por municipio y ejercicio
+select * from presupuesto where municipio = ? and ejercicio = ?;
+
+#Saca la Obra publica por municipio y ejercicio
+select * from obra_publica where ejercicio = ? and municipio = ?;
+
+
+#crea la vista revanada
+create view rebanada as select DISTINCT o.id "id", p.ejercicio "año", p.municipio "municipio", o.concepto "concepto", o.monto_ejercido, p.habitantes "Gasto_por_persona" from obra_publica o inner join presupuesto p using(municipio, ejercicio);
+
+#Te trae el concepto, gasto de area por persona de un municipio y año espesifico
+select * from rebanada where municipio = ? and año = ?;
+
+#Te trae el lugar del municipio en un año determinado de cada concepto
+select concepto, count(*) as "Lugar" from rebanada r where concepto in (select DISTINCT concepto from obra_publica where municipio = <municipio> and ejercicio = <año>) AND gasto_por_persona >= (select gasto_por_persona from rebanada i where i.concepto = r.concepto AND municipio = <municipio> AND año = <año>) AND año = <año> group by concepto;
+
+
+
+
