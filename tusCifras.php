@@ -1,5 +1,5 @@
 <?php
-
+    include"variablesVistas.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,16 +7,13 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>#####</title>
+        <title>Tu rebanada del pastel</title>
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/bootstrap-custom.css" rel="stylesheet">
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
         
     
-      <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-      <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
       <![endif]-->
@@ -24,7 +21,7 @@
     <body>
         <nav class="navbar navbar-default navbar-inverse" role="navigation">
             <div class="navbar-header">
-               <a class="navbar-brand" href="@{Application.index}"><span class="glyphicon glyphicon-cutlery"></span>&nbsp; &nbsp;Tu rebanada del pastel</a>
+               <a class="navbar-brand" href="index.php"><span class="glyphicon glyphicon-cutlery"></span>&nbsp; &nbsp;Tu rebanada del pastel</a>
             </div>
         </nav>
     
@@ -45,55 +42,12 @@
                     <fieldset>
                       <legend><span class="glyphicon glyphicon-usd"></span>&nbsp; &nbsp;Lo que invirtieron en tí en el año #####</legend>
                       
+                        <?php
+                            $value = array(0,20,30,12,23,44,56,19);
+                            $name = array("1","2","3","4","5","6","7","8");
+                            chart(500, $value, $name); ?>
                       
-                      
-                        <div id="canvas-holder" class="col-md-offset-2 col-md-7">
-                                <canvas id="chart-area" width="550" height="550"/>
-                        </div>
-                      
-        
-                        <script>
-                            var doughnutData = [
-                                    {value: 300,
-                                        color:"#F7464A",
-                                        highlight: "#FF5A5E",
-                                        label: "Red"},
-                                    {value: 50,
-                                        color: "#46BFBD",
-                                        highlight: "#5AD3D1",
-                                        label: "Green"},
-                                    {value: 100,
-                                        color: "#FDB45C",
-                                        highlight: "#FFC870",
-                                        label: "Yellow"},
-                                    {value: 140,
-                                        color: "#949FB1",
-                                        highlight: "#A8B3C5",
-                                        label: "Grey"},
-                                    {value: 420,
-                                        color: "#F7BE81",
-                                        highlight: "#F5D0A9",
-                                        label: "Beige"},
-                                    {value: 80,
-                                        color: "#FA8258",
-                                        highlight: "#F79F81",
-                                        label: "Orange"},
-                                    {value: 25,
-                                        color: "#F7819F",
-                                        highlight: "#F5A9BC",
-                                        label: "Pink"},
-                                    {value: 120,
-                                        color: "#4D5360",
-                                        highlight: "#616774",
-                                        label: "Dark Grey"}
-        
-                                ];
-        
-                                window.onload = function(){
-                                        var ctx = document.getElementById("chart-area").getContext("2d");
-                                        window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive : true});
-                                };
-                        </script>
+                        
                       
                     </fieldset>
                 </form>
@@ -102,7 +56,7 @@
     
         <div class="container"><br><br><br>
             <div class="col-md-6">
-                <form class="form-horizontal" action="#" method="post" style="text-align:center" >
+                <form class="form-horizontal" action="#" method="post" >
                     <fieldset>
                         <legend>Obras públicas</legend>
                         
@@ -112,7 +66,7 @@
                                     <th>#</th>
                                     <th>Tipo de obra</th>
                                     <th>Aporte por persona</th>
-                                    <th>Lugar de tu municipio en el estado</th>
+                                    <th>Lugar de #####</th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tu rebanada de Pastel</title>
+    <title>Tu rebanada de pastel</title>
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-custom.css" rel="stylesheet">
@@ -24,7 +24,7 @@
     <?php include("navbar.php");?>    
     <div class="container">
     <div class="col-md-offset-3 col-md-6">
-        <form class="form-horizontal" action="tusCifras" method="GET" style="text-align:center" >
+        <form class="form-horizontal" action="tusCifras.php" method="GET" style="text-align:center" >
             <fieldset>
                 <legend>¿Cuánto ha invertido tu municipio en tí?</legend>
                 
@@ -36,7 +36,6 @@
                             <?php
                                 $query = 'select DISTINCT ejercicio from presupuesto where ejercicio in (select DISTINCT ejercicio from obra_publica );';
                                 $resultado = $conexion->query($query);
-                                $resultado->data_seek(0);
                                 while($registro = $resultado->fetch_assoc()){
                                     echo '<option value="'.$registro['ejercicio'].'">'.$registro['ejercicio'].'</option>';
                                 }
@@ -74,15 +73,20 @@
         console.log('acceso a function');
         var ejercicio = e.options[e.selectedIndex].value;
         $.ajax({
-                    url: '/control/getMunicipios?ejercicio=' + ejercicio                    
-                  }).done(function ( data ) {
-                    for(var x = 0; x < data.length; x++){
-                        opt = document.createElement("option");
-                        opt.setAttribute("value", data[x]);
-                        optTextnode = document.createTextNode(data[x]);
-                        opt.appendChild(optTextnode);
-                        f.appendChild(opt);
-                    }
+                    url: 'control/getMunicipios.php?ejercicio=' + ejercicio,
+                    dataType: 'json'
+                  }).done(function (data) {
+                        console.log(data["0"]);
+                        x =0;
+                        while (data["" + x + ""] != undefined){
+                            console.log(data.x);
+                            opt = document.createElement("option");
+                            opt.setAttribute("value", data["" + x + ""]);
+                            optTextnode = document.createTextNode(data["" + x + ""]);
+                            opt.appendChild(optTextnode);
+                            f.appendChild(opt);
+                            x++
+                        }
                   });
     }
     
