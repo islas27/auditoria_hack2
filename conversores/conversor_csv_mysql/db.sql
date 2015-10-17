@@ -22,3 +22,11 @@ CREATE TABLE presupuesto(
 	monto_ejercido REAL(15,2),
     	habitantes INT
 );
+
+create view rebanada as select DISTINCT
+    o.id "id", p.ejercicio "anio", p.municipio "municipio", o.concepto "concepto",
+    o.monto_ejercido/p.habitantes "gasto_persona"
+from obra_publica o
+inner join presupuesto p
+using(municipio, ejercicio);
+

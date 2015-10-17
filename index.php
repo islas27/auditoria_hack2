@@ -24,14 +24,14 @@
     <?php include("navbar.php");?>    
     <div class="container">
     <div class="col-md-offset-3 col-md-6">
-        <form class="form-horizontal" action="tusCifras.php" method="GET" style="text-align:center" >
+        <form class="form-horizontal" action="tusCifras.php" method="get" style="text-align:center" >
             <fieldset>
                 <legend>¿Cuánto ha invertido tu municipio en tí?</legend>
                 
                 <div class="form-group"><br>
                     <label for="select" class="col-lg-4 control-label">Año: </label>
                     <div class="col-lg-6">
-                        <select class="form-control" id="year" onchange="loadMunicipios()">
+                        <select class="form-control" id="year" name="year" onchange="loadMunicipios()">
                             <option value="">Seleccione un Año</option>
                             <?php
                                 $query = 'select DISTINCT ejercicio from presupuesto where ejercicio in (select DISTINCT ejercicio from obra_publica );';
@@ -49,7 +49,7 @@
                 <div class="form-group"><br>
                     <label for="select" class="col-lg-4 control-label">Municipio: </label>
                     <div class="col-lg-6">
-                        <select class="form-control" id="municipio">
+                        <select class="form-control" id="municipio" name="municipio">
                             <option value="">Seleccione un Municipio</option>
                             
                         </select>
