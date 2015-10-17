@@ -24,16 +24,9 @@
         <?php include("navbar.php");?>  
     
         <div class="container">
-            <div class="col-md-6">
-                <form class="form-horizontal" action="#" method="post" style="text-align:center" >
-                    <fieldset>
-                        <legend><br><span class="glyphicon glyphicon-home"></span>&nbsp; &nbsp;<?php echo $_GET['municipio']?></legend>
-                        <embed id="estado" src="images/Municipios_de_Chihuahua2.svg" width="500" height="500" />
-                    </fieldset>
-                </form>
-            </div>
             
-            <div class="col-md-6">
+            
+            <div class="col-xs-12">
                 <form class="form-horizontal" action="#" method="post" style="text-align:center" >
                     <fieldset>
                       <legend>Lo que gastó el Gobierno en tí<br>en el año por su operación en el <?php echo $_GET['year']?></legend>
@@ -111,6 +104,14 @@
                     </fieldset>
                 </form>
             </div>
+            <div class="col-md-12">
+                <form class="form-horizontal" action="#" method="post" style="text-align:center" >
+                    <fieldset>
+                        <legend><br><span class="glyphicon glyphicon-home"></span>&nbsp; &nbsp;<?php echo $_GET['municipio']?></legend>
+                        <embed id="estado" src="images/Municipios_de_Chihuahua2.svg"/>
+                    </fieldset>
+                </form>
+            </div>
         </div>
     
     
@@ -120,6 +121,9 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- This is for creating the charts in the project -->
     <script src="js/Chart.min.js"></script>
-   
+    <script src="js/color.js"></script>
+    <script type="text/javascript">
+        cambiarColor("<?php echo $_GET['municipio']?>");
+    </script>
   </body>
 </html>
