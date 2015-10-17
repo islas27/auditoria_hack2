@@ -56,19 +56,25 @@
         <div class="container"><br><br><br>
             <div class="col-md-6">
             <?php
-                $query = "select * from rebanada where municipio = '".$_GET['municipio']."' and anio = '".$_GET['year']."';";
+                $query = "select * from rebanada where municipio = '".$_GET['municipio']."' and anio = '".$_GET['year']."' order by concepto;";
+                $query2 = "select concepto, count(*) as 'lugar' from rebanada r where concepto in
+                (select DISTINCT concepto from obra_publica where municipio = '".$_GET['municipio']."' and ejercicio = '".$_GET['year']."')
+                AND gasto_persona >= (select gasto_persona from rebanada i where i.concepto = r.concepto
+                AND municipio = '".$_GET['municipio']."' AND anio = '".$_GET['year']."') AND anio = '".$_GET['year']."' group by concepto order by concepto;";
                 $resultado = $conexion->query($query);
+                $resultado2 = $conexion->query($query2);
                 $arrayValues = new ArrayObject();
                 $arrayNames = new ArrayObject();
                 $str = "";
                 while($registro = $resultado->fetch_assoc()){
+                    $registro2 = $resultado2->fetch_assoc();
                     $arrayValues->append($registro['gasto_persona']);
                     $arrayNames->append($registro['concepto']);
                     $str.= '<tr>';
                     $str.= '<td>'.$registro['concepto'].'</td>';
                     $str.= '<td>'.$registro['gasto_persona'].'</td>';
                     //echo del glyphicon: <span class="glyphicon glyphicon-home"></span>&nbsp; &nbsp;
-                    $str.= '<td>Lugar en el estado: ###</td>';
+                    $str.= '<td>Lugar en el estado: '.$registro2['lugar'].'</td>';
                     $str.= '</tr>';
                 }
                 while(count($arrayValues) < 15){
