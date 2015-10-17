@@ -28,8 +28,7 @@
                 <form class="form-horizontal" action="#" method="post" style="text-align:center" >
                     <fieldset>
                         <legend><br><span class="glyphicon glyphicon-home"></span>&nbsp; &nbsp;<?php echo $_GET['municipio']?></legend>
-                        
-                        mapa con municipio pintado!
+                        <embed id="estado" src="images/Municipios_de_Chihuahua2.svg" width="500" height="500" />
                     </fieldset>
                 </form>
             </div>
@@ -68,6 +67,7 @@
                 $resultado = $conexion->query($query);
                 $arrayValues = new ArrayObject();
                 $arrayNames = new ArrayObject();
+                $str = "";
                 while($registro = $resultado->fetch_assoc()){
                     $arrayValues->append($registro['gasto_persona']);
                     $arrayNames->append($registro['concepto']);
